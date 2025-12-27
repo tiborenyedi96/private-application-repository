@@ -56,9 +56,8 @@ frontend:
     pullPolicy: Always
   replicaCount: 1
   service:
-    type: NodePort
+    type: ClusterIP
     port: 80
-    nodePort: 30001
   resources:
     requests:
       memory: "128Mi"
