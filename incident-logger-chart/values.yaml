@@ -1,4 +1,5 @@
 namespace: udemx
+
 mysql:
   image:
     repository: mysql
