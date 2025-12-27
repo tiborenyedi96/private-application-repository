@@ -1,0 +1,81 @@
+namespace: udemx
+mysql:
+  image:
+    repository: mysql
+    tag: "8.4"
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  auth:
+    rootPassword: "Alma1234"
+    database: "udemx_db"
+    username: "udemx"
+    password: "Alma1234"
+  persistence:
+    enabled: true
+    storageClass: ""
+    size: 1Gi
+    accessMode: ReadWriteOnce
+  service:
+    type: ClusterIP
+    port: 3306
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"
+
+backend:
+  image:
+    repository: tenyedi96/incident-logger-backend
+    tag: latest
+    pullPolicy: Always
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 8000
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+  healthCheck:
+    enabled: true
+    path: /health
+    initialDelaySeconds: 10
+    periodSeconds: 30
+
+frontend:
+  image:
+    repository: tenyedi96/incident-logger-frontend
+    tag: latest
+    pullPolicy: Always
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 80
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  hosts:
+   - host: incident-logger.local
+     paths:
+      - path: /
+        pathType: Prefix
+        service: frontend
+  tls:
+    enabled: true
+    secretName: incident-logger-tls-secret
