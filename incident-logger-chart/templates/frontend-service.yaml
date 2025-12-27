@@ -12,6 +12,9 @@ spec:
     - name: http
       port: {{ .Values.frontend.service.port }}
       targetPort: {{ .Values.frontend.service.port }}
+      {{- if .Values.frontend.service.nodePort }}
+      nodePort: {{ .Values.frontend.service.nodePort }}
+      {{- end }}
   selector:
     {{- include "incident-logger.selectorLabels" . | nindent 4 }}
     component: frontend
