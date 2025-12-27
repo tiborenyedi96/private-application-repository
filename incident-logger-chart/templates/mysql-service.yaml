@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
- labels:
-  {{- include "incident-logger.labels" . | nindent 4 }}
-  component: mysql
- name: {{ include "incident-logger.fullname" . }}-mysql
- namespace: {{ .Values.namespace }}
+  name: {{ include "incident-logger.fullname" . }}-mysql
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "incident-logger.labels" . | nindent 4 }}
+    component: mysql
 spec:
- type: {{ .Values.mysql.service.type }}
- ports:
- - name: mysql-service
-   port: {{ .Values.mysql.service.port }}
-   targetPort: {{ .Values.mysql.service.port }}
- selector:
-  {{- include "incident-logger.selectorLabels" . | nindent 6 }}
-  component: mysql
+  type: {{ .Values.mysql.service.type }}
+  ports:
+    - name: mysql-service
+      port: {{ .Values.mysql.service.port }}
+      targetPort: {{ .Values.mysql.service.port }}
+  selector:
+    {{- include "incident-logger.selectorLabels" . | nindent 4 }}
+    component: mysql
