@@ -65,18 +65,3 @@ frontend:
     limits:
       memory: "256Mi"
       cpu: "200m"
-
-ingress:
-  enabled: true
-  className: nginx
-  annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-  hosts:
-   - host: incident-logger.local
-     paths:
-      - path: /
-        pathType: Prefix
-        service: frontend
-  tls:
-    enabled: true
-    secretName: incident-logger-tls-secret
