@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: {{ include "incident-logger.fullname" . }}-mysql-data-pvc
+ namespace: {{ .Values.namespace }}
+spec:
+  {{- if .Values.mysql.persistence.storageClass }}
+  storageClassName: {{ .Values.mysql.persistence.storageClass }}
+  {{- end }}
+ accessModes:
+  - {{ .Values.mysql.persistence.accessMode }}
+ resources:
+  requests:
+   storage: {{ .Values.mysql.persistence.size }}
