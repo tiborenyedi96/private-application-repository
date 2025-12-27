@@ -25,6 +25,17 @@ spec:
           ports:
             - containerPort: {{ .Values.backend.service.port }}
               name: backend
+          env:
+            - name: DB_HOST
+              value: {{ include "incident-logger.fullname" . }}-mysql
+            - name: DB_PORT
+              value: "{{ .Values.mysql.service.port }}"
+            - name: DB_USER
+              value: {{ .Values.mysql.auth.username }}
+            - name: DB_PASSWORD
+              value: {{ .Values.mysql.auth.password }}
+            - name: DB_NAME
+              value: {{ .Values.mysql.auth.database }}
           resources:
             requests:
               memory: {{ .Values.backend.resources.requests.memory }}
