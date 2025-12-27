@@ -3,8 +3,15 @@ from sqlalchemy import create_engine, text
 from pydantic import BaseModel
 from enum import Enum
 from datetime import datetime
+import os
 
-engine = create_engine("mysql+pymysql://appuser:appsecret@mysql:3306/incident_db")
+DB_HOST = os.getenv("DB_HOST", "mysql")
+DB_PORT = os.getenv("DB_PORT", "3306")
+DB_USER = os.getenv("DB_USER", "appuser")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "appsecret")
+DB_NAME = os.getenv("DB_NAME", "incident_db")
+
+engine = create_engine(f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
 
 class Severity(str, Enum):
     LOW = "LOW"
