@@ -18,6 +18,10 @@ spec:
         {{- include "incident-logger.selectorLabels" . | nindent 8 }}
         component: backend
     spec:
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+      {{- end }}
       containers:
         - name: api
           image: {{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}
