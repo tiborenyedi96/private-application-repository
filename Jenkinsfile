@@ -45,7 +45,9 @@ pipeline {
                      --set frontend.image.repository=${DOCKERHUB_USER}/incident-logger-frontend \
                      --set frontend.image.tag=${IMAGE_TAG} \
                      --set backend.image.repository=${DOCKERHUB_USER}/incident-logger-backend \
-                     --set backend.image.tag=${IMAGE_TAG}"
+                     --set backend.image.tag=${IMAGE_TAG} \
+                     --set imagePullSecrets[0].name=dockerhub-secret \
+                     -n udemx"
                 '''
             }
         }
