@@ -33,7 +33,7 @@ pipeline {
         stage('Copy Helm Chart') {
             steps {
                 sh '''
-                    scp -i /var/lib/jenkins/.ssh/id_rsa -P 2233 -r helm-charts/incident-logger-chart udemx@192.168.1.167:/tmp/
+                    scp -i /var/lib/jenkins/.ssh/id_rsa -P 2233 -r incident-logger-chart udemx@192.168.1.167:/tmp/
                 '''
             }
         }
@@ -57,3 +57,4 @@ pipeline {
         }
     }
 }
+
