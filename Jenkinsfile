@@ -42,8 +42,10 @@ pipeline {
                 sh '''
                     ssh -i /var/lib/jenkins/.ssh/id_rsa -p 2233 udemx@192.168.1.167 \
                     "helm upgrade --install incident-logger /tmp/incident-logger-chart \
-                     --set frontend.image=${DOCKERHUB_USER}/incident-logger-frontend:${IMAGE_TAG} \
-                     --set backend.image=${DOCKERHUB_USER}/incident-logger-backend:${IMAGE_TAG}"
+                     --set frontend.image.repository=${DOCKERHUB_USER}/incident-logger-frontend \
+                     --set frontend.image.tag=${IMAGE_TAG} \
+                     --set backend.image.repository=${DOCKERHUB_USER}/incident-logger-backend \
+                     --set backend.image.tag=${IMAGE_TAG}"
                 '''
             }
         }
@@ -57,4 +59,3 @@ pipeline {
         }
     }
 }
-
