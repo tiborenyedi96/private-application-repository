@@ -33,14 +33,14 @@ pipeline {
         stage('Copy Helm Chart') {
             steps {
                 sh '''
-                    scp -i /var/lib/jenkins/.ssh/id_rsa -P 2233 -r incident-logger-chart udemx@192.168.1.185:/tmp/
+                    scp -i /var/lib/jenkins/.ssh/id_rsa -P 2233 -r incident-logger-chart udemx@192.168.1.187:/tmp/
                 '''
             }
         }
         stage('Deploy') {
             steps {
                 sh '''
-                    ssh -i /var/lib/jenkins/.ssh/id_rsa -p 2233 udemx@192.168.1.185 \
+                    ssh -i /var/lib/jenkins/.ssh/id_rsa -p 2233 udemx@192.168.1.187 \
                     "helm upgrade --install incident-logger /tmp/incident-logger-chart \
                      --set frontend.image.repository=${DOCKERHUB_USER}/incident-logger-frontend \
                      --set frontend.image.tag=${IMAGE_TAG} \
@@ -61,5 +61,6 @@ pipeline {
         }
     }
 }
+
 
 
